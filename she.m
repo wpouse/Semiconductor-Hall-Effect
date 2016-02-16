@@ -1,4 +1,5 @@
 close all
+%{
 %Positive field measurements, forward then reverse
 R_AC_BD = VoltageBD(1:3:end)./samplecurrentAC(1:3:end);
 R_BD_CA = VoltageAC(1:3:end)./samplecurrentBD(1:3:end);
@@ -41,3 +42,9 @@ R_H1_neg(46)
 title('Hall Coefficient');
 xlabel('Temperature (K)'); ylabel('Hall Coefficient m^3/C');
 legend('Positive B-field', 'Zero B-field', 'Negative B-field');
+%}
+%Resistivity positive field
+R_AB_CD_pos = VoltageCD(1:3:end)./samplecurrentAB(1:3:end);
+R_AD_CB_pos = VoltageBC(1:3:end)./samplecurrentAD(1:3:end);
+resistivity = pi*1.25*10^-3 /log(2) *.5 * (R_AB_CD_pos+R_AD_CB_pos).*f(R_AB_CD_pos./R_AD_CB_pos);
+scatter(1./TemperatureK(1:3:end), resistivity);
